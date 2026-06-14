@@ -1,7 +1,9 @@
-fastapi 
-uvicorn 
-motor 
-python-dotenv 
-passlib[bcrypt] 
-python-jose[cryptography] 
+fastapi
+uvicorn[standard]
+motor
+python-dotenv
+bcrypt
+python-jose[cryptography]
 pydantic[email]
+pymongo[srv]
+certifi
