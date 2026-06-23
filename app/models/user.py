@@ -1,6 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field
-from bson    import ObjectId
-from typing  import Optional
+from typing   import Optional
 from datetime import datetime
 
 class UserModel(BaseModel):
@@ -8,9 +7,10 @@ class UserModel(BaseModel):
     name:       str
     email:      EmailStr
     password:   str
+    role:       str                = "student"   # "student" or "admin"
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
 
     class Config:
-        populate_by_name = True
+        populate_by_name        = True
         arbitrary_types_allowed = True

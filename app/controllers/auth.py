@@ -33,11 +33,19 @@ async def register_user(data: RegisterSchema):
             detail      = "Email already registered"
         )
 
+    # validate role
+    if data.role not in ["student", "admin"]:
+        raise HTTPException(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            detail      = "Invalid role. Must be student or admin"
+        )
+
     user = {
         "_id":        str(ObjectId()),
         "name":       data.name,
         "email":      data.email,
         "password":   hash_password(data.password),
+        "role":       data.role,
         "created_at": datetime.utcnow(),
         "updated_at": datetime.utcnow(),
     }
@@ -47,6 +55,7 @@ async def register_user(data: RegisterSchema):
         "id":    user["_id"],
         "name":  user["name"],
         "email": user["email"],
+        "role":  user["role"],
         "token": create_token(user["_id"]),
     }
 
@@ -64,6 +73,7 @@ async def login_user(data: LoginSchema):
         "id":    user["_id"],
         "name":  user["name"],
         "email": user["email"],
+        "role":  user["role"],
         "token": create_token(user["_id"]),
     }
 
@@ -72,5 +82,5 @@ async def get_me(current_user: dict):
         "id":    current_user["_id"],
         "name":  current_user["name"],
         "email": current_user["email"],
+        "role":  current_user["role"],
     }
-
